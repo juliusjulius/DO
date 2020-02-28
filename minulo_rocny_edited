@@ -123,44 +123,39 @@ public class Matica {
     public void GJE() {
         double pivot;
         double pompom;
-        
-        for (int riadok = 0; riadok < pocRia; riadok++)  
-        {
-            if (PocetNenulovych(riadok) == 0)
-            {
-                baza[riadok]=-1;
-                break;
-            }
-            
-            for (int stlpec = 0; stlpec < pocStl+1; stlpec++) 
-            {
-                        
-                if(pole[riadok][stlpec] != 0 )
-                {
-                    pivot = pole[riadok][stlpec];
-                    baza[riadok] = stlpec;
-                    if(stlpec == pocStl ){     //testujem či nahodou matica nieje 0000|1
-                        System.out.println("Nemá riešenie");
-                        return;
-                    } 
-                        
-                    for (int piv = 0; piv < pocStl+1; piv++) 
-                    {
-                        pole[riadok][piv] /=  pivot;
-                    } 
-                    
-                    for (int i = 0; i < pocRia; i++) {
-                        pompom = (-1)*pole[i][stlpec]; // tymto nasobim cely riadok  
-                        for (int j = stlpec; j < pocStl+1; j++) {
-                            if(i == riadok){
-                                break; //ak sa zhoduje s pivot riadkom 
-                            } 
-                           pole[i][j] += (pole[riadok][j] * pompom);  //uprava s i na riadok
-                             
+
+        for (int riadok = 0; riadok < pocRia; riadok++) {
+            if (PocetNenulovych(riadok) == 0) {
+                baza[riadok] = -1;
+            } else {
+
+                for (int stlpec = 0; stlpec < pocStl + 1; stlpec++) {
+
+                    if (pole[riadok][stlpec] != 0) {
+                        pivot = pole[riadok][stlpec];
+                        baza[riadok] = stlpec;
+                        if (stlpec == pocStl) {     //testujem či nahodou matica nieje 0000|1
+                            System.out.println("Nemá riešenie");
+                            return;
                         }
-                        
+
+                        for (int piv = 0; piv < pocStl + 1; piv++) {
+                            pole[riadok][piv] /= pivot;
+                        }
+
+                        for (int i = 0; i < pocRia; i++) {
+                            pompom = (-1) * pole[i][stlpec]; // tymto nasobim cely riadok  
+                            for (int j = stlpec; j < pocStl + 1; j++) {
+                                if (i == riadok) {
+                                    break; //ak sa zhoduje s pivot riadkom 
+                                }
+                                pole[i][j] += (pole[i][j] * pompom);
+
+                            }
+
+                        }
+                        zobraz();
                     }
-                    zobraz();
                 }
             }
         }
@@ -177,20 +172,17 @@ public class Matica {
     }
 
     public void VyhodnotRiesenie() {
-       
+
         int pom = 1;
         for (int i = 0; i < baza.length; i++) {
             if (i == -1) {
                 pom++;
             }
         }
-        
-        if ((pocetRiadkov() - pom) == pocetStlpcov()) 
-        {
+
+        if ((pocetRiadkov() - pom) == pocetStlpcov()) {
             System.out.println("Sústava lineárnych rovníc má práve jedno riešenie");
-        }
-        else
-        {
+        } else {
             System.out.println("Sústava lineárnych rovníc má nekonečno veľa riešení");
         }
 
